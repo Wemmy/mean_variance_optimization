@@ -3,13 +3,13 @@ import pandas as pd
 
 from scipy.optimize import minimize
 
-from mvo.config import index_pool, index_limit, universe_limit
-from mvo.wind import index_close_price
+from mvo.config import symbols
+from mvo.yahoo import get_data
 
 
 class OptimizeConfig(object):
-    start_date = "2007-01-01"
-    end_date = "2019-12-31"
+    start_date = "2020-01-01"
+    end_date = "2023-11-01"
     window = 3
     r = 0.015
     low_risk = 0.03
@@ -17,20 +17,9 @@ class OptimizeConfig(object):
     def __init__(self, risk=0.02):
         self.risk = risk
 
-    @property
-    def bounds(self):
-        if self.risk <= self.low_risk:
-            cash = index_pool.get('cash')
-            for c in cash:
-                index_limit[c] = (0.05, 1)
-        return index_limit
-
 
 def indexes_from_index_pool():
-    indexes = []
-    for index_list in index_pool.values():
-        indexes.extend(index_list)
-    return indexes
+    return symbols
 
 
 def index_history():
@@ -38,7 +27,7 @@ def index_history():
     start = OptimizeConfig.start_date
     end = OptimizeConfig.end_date
     indexes = indexes_from_index_pool()
-    data = index_close_price(indexes, start, end)
+    data = get_data(indexes, start, end)
     return data
 
 
