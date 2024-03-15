@@ -14,5 +14,10 @@ def cumulative_return_vis(data):
 
     fig.show()
 
+
+def correlation_heatmap_vis(data):
+    port_corr = data.corr()
+    sns.heatmap(port_corr)
+
 if __name__ == '__main__':
     pass

@@ -6,7 +6,7 @@ from scipy.optimize import minimize
 from mvo.config import symbols
 from mvo.yahoo import get_data
 
-
+ 
 class OptimizeConfig(object):
     start_date = "2020-01-01"
     end_date = "2023-11-01"
